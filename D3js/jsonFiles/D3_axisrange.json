@@ -1,0 +1,25 @@
+{
+	"chart_label":
+		{
+			"node":{"max":,"min":},
+			"txp":{"max":,"min":},
+			"ccat":{"max":,"min":},
+			"Dthr":{"max":,"min":},
+			"Uthr":{"max":,"min":},
+			"Dmcs":{"max":,"min":},
+			"Umcs":{"max":,"min":},
+			"txtime":{"max":,"min":},
+			"rxtime":{"max":,"min":},
+			"rxtimeme":{"max":,"min":},
+			"rxtimes":{"max":,"min":},
+			"rxtimeo":{"max":,"min":},
+			"idle":{"max":,"min":},
+			"busy":{"max":,"min":},
+			"sinr":{"max":,"min":},
+			"detect":{"max":,"min":},
+			"loss":{"max":,"min":},
+			"reover":{"max":,"min":},
+			"busy":{"max":,"min":},
+			
+		}
+}

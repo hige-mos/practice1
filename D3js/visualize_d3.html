@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+		<title>Analysis</title>
+		
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+		<script src="./js/popper.min.js"></script>
+		<script src="./js/bootstrap.min.js"></script>
+		
+		<link rel="stylesheet" href="./css/split-pane.css" />
+		<link rel="stylesheet" href="./css/pretty-split-pane.css" />
+		<link rel="stylesheet" href="./css/bootstrap.min.css">
+		<link href="./open-iconic-master/font/css/open-iconic-bootstrap.css" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css?family=Teko" rel="stylesheet">		
+		<script src="./js/split-pane.js"></script>
+		<script src="https://cdn.polyfill.io/v2/polyfill.min.js"></script>
+		<script src="./js/html2canvas.min.js"></script>
+		<script src="./js/getImage.js"></script>
+		<script src="./js/bootstrap-switch.js"></script>
+			
+		<link href="./css/highlight.css" rel="stylesheet">
+		<link href="./css/original.css" rel="stylesheet">
+		<link href="https://unpkg.com/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.css" rel="stylesheet">
+	
+		<script>
+
+			$(function() {
+				$('div.split-pane').splitPane();
+
+				$('#enter').on('click', function() {
+					$('#exit')[0].setAttribute('style', "display:;");
+					$('#enter')[0].setAttribute('style', "display:none;");
+					$('div.split-pane').splitPane('firstComponentSize', 10);
+				});
+				
+				$('#exit').on('click', function() {
+					$('div.split-pane').splitPane('firstComponentSize', 288);
+					$('#enter')[0].setAttribute('style', "display:;");
+					$('#exit')[0].setAttribute('style', "display:none;");
+				});
+			});
+			
+		</script>
+
+</head>
+	<body>
+		<div class="pretty-split-pane-frame">
+			<div class="split-pane fixed-left">
+				<div class="split-pane-component" id="left-component">
+					<div class="pretty-split-pane-component-inner" id = "left-innner">
+						<form id="action">
+							<table class = "table table-bordered table-sm table-hover"  id = "settings" width = "250">
+								<tr>
+									<th colspan = '2'>Option Setting </th>
+								</tr>
+								<tr>
+									<td class = "lline col-xs-3">File</td>
+									<td id = "flabel col-xs-9">
+										<label for = "file_select">
+											＋extract_file <span class="oi oi-file"></span>
+											<input name="myfile" type="file" id = "file_select" accept='extract*.json' multiple="multiple" style = "display:none;">
+										</label>
+									</td>
+								</tr>
+								<tr>
+									<td class = "lline">Scenario</td>
+									<td>
+										<select id="ss" onChange="RoleChange()" style="width:100px">
+										<option value="ss5" selected>ss5</option>
+										</select>
+									</td>
+								</tr>
+								<tr>
+									<td class = "lline">Drop</td>
+									<td>
+										<select id="drop" style="width: 100px">
+										<option value="drop01" selected>Drop01</option>
+										<option value="drop02" >Drop02</option>
+										<option value="drop03" >Drop03</option>
+										<option value="drop04" >Drop04</option>
+										<option value="drop05" >Drop05</option>				
+										</select>
+									</td>
+								</tr>
+								<tr>
+									<td class = "lline">Color</td>
+									<td>
+										<select id="flow">
+										<option value="D" selected>DL(AP)</option>
+										<option value="U">UL(STA)</option>
+										</select><br>
+										<select id="variable">
+										<option value="thr" selected>Throughput</option>
+										<option value="mcs">MCS</option>
+										<option value="sinr">SINR</option>
+										<option value="detect">Num of Detects</option>
+										<option value="reover">Retry Overhead</option>
+										<option value="loss">Loss Ratio</option>
+										<option value="txtime">Txtime</option>
+										<option value="sent">Num of Sent</option>
+										<option value="rxtimeme">Rxtime(ForMe)</option>
+										<option value="rxtimes">Rxtime(SBSS)</option>
+										<option value="rxtimeo">Rxtime(OBSS)</option>
+										<option value="rxtime">Rxtime</option>
+										<option value="idle">Idletime</option>
+										<option value="busy">Busytime</option>
+										<option value="notdetect">NotDetectDueToLevel</option>
+										</select>
+									</td>
+								</tr>
+								<tr>
+									<td class = "lline">Role</td>
+									<td>
+										<div id = "rolecheck">
+											<label><input type="checkbox" name = "role" value="WEB"  onclick="uncheck();" checked = "true" data-switch-no-init="data-switch-no-init">Web</input></label>
+											<label><input type="checkbox" name = "role" value="HQV"  onclick="uncheck();" checked = "true" data-switch-no-init="data-switch-no-init">HQV</input></label>
+											<label><input type="checkbox" name = "role" value="HA"   onclick="uncheck();" checked = "true" data-switch-no-init="data-switch-no-init">HA</input></label>
+											<label><input type="checkbox" name = "role" value="RO"   onclick="uncheck();" checked = "true" data-switch-no-init="data-switch-no-init">RO</input></label>
+											<label><input type="checkbox" name = "role" value="GAME" onclick="uncheck();" checked = "true" data-switch-no-init="data-switch-no-init">GAME</input></label>
+											<label><input type="checkbox" name = "allrole" value="ALL" onclick="allcheck();" checked = "true" data-switch-no-init="data-switch-no-init">ALL</input></label>
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td class = "lline" colspan = '2'>
+									<button  type = "button" class="btn btn-outline-secondary btn-block" onclick="Update();"/><span class="oi oi-reload"></span> Update Option Setting</td>
+								</tr>
+								<tr>
+									<td class = "lline" colspan = '2'>
+									<button  type = "button" class="btn btn-outline-secondary btn-block" onclick="getDisplayImage();"/><a id="getImage" href="" download="image.png"><span class="oi oi-reload"></span> caputure this figure</a></td>
+								</tr>
+								<tr>
+									<th colspan = '2'>Show TPC/DSC Range</th>
+								</tr>
+								<tr>
+									<td class = "lline">
+										Src Node
+									</td>
+									<td>
+										<input type="text" id="src" value="" size="10" onKeyUp="SChange()">
+									</td>
+								</tr>
+								<tr>
+									<td class = "lline">
+										Dest Node
+									</td>
+									<td>
+										<select id="dest" onChange="DChange()"></select>
+									</td>
+								</tr>
+								<tr>
+									<td class = "lline">Distance</td>
+									<td id='distance'></td>
+								</tr>
+								<tr>
+									<td class = "lline " colspan = '2'>
+										<div class="btn-group btn-block" role = "group">
+											<button  type = "button" class="btn btn-outline-secondary "  onclick="ShowDetectLine();"/><span class="oi oi-eye"></span> Show Detect Line
+											<button  type = "button" class="btn btn-outline-secondary "  onclick="ClearDetectLine();" /><span class="oi oi-circle-x"></span> Clear
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<th colspan = '2'>Show STA Plot</th>
+								</tr>
+								<tr>
+									<td class = "lline">X axis</td>
+									<td>
+										<select id="STAplotx" style="width:150px">
+										<option value="node" selected>Node ID</option>
+										<option value="thr">Throughput</option>
+										<option value="mcs">MCS</option>
+										<option value="sinr">SINR</option>
+										<option value="detect">Num of Detects</option>
+										<option value="reover">Retry Overhead</option>
+										<option value="loss">Loss Ratio</option>
+										<option value="txtime">Txtime(DL)</option>
+										<option value="sent">Num of Sent(DL)</option>
+										<option value="rxtimeme">Rxtime(ForMe)</option>
+										<option value="rxtimes">Rxtime(SBSS)</option>
+										<option value="rxtimeo">Rxtime(OBSS)</option>
+										<option value="rxtime">Rxtime</option>
+										<option value="idle">Idletime</option>
+										<option value="busy">Busytime</option>
+										<option value="txp">TxPower</option>
+										<option value="ccat">CCAT</option>
+										<option value="notdetect">NotDetectDueToLevel</option>
+										</select>
+									</td>
+								</tr>
+								<tr>
+									<td class = "lline">Y axis</td>
+									<td>
+										<select id="STAploty" style="width:150px">
+										<option value="node" selected>Node ID</option>
+										<option value="thr">Throughput</option>
+										<option value="mcs">MCS</option>
+										<option value="sinr">SINR</option>
+										<option value="detect">Num of Detects</option>
+										<option value="reover">Retry Overhead</option>
+										<option value="loss">Loss Ratio</option>
+										<option value="txtime">Txtime(DL)</option>
+										<option value="sent">Num of Sent(DL)</option>
+										<option value="rxtimeme">Rxtime(ForMe)</option>
+										<option value="rxtimes">Rxtime(SBSS)</option>
+										<option value="rxtimeo">Rxtime(OBSS)</option>
+										<option value="rxtime">Rxtime</option>
+										<option value="idle">Idletime</option>
+										<option value="busy">Busytime</option>
+										<option value="txp">TxPower</option>
+										<option value="ccat">CCAT</option>
+										<option value="notdetect">NotDetectDueToLevel</option>
+										</select>
+									</td>
+								</tr>
+								<tr>
+									<td class = "lline">Color</td>
+									<td>
+										<select id="STAplotc" style="width:150px">>
+										<option value="thr">Throughput</option>
+										<option value="mcs" selected>MCS</option>
+										<option value="sinr">SINR</option>
+										<option value="detect">Num of Detects</option>
+										<option value="reover">Retry Overhead</option>
+										<option value="loss">Loss Ratio</option>
+										<option value="txtime">Txtime</option>
+										<option value="sent">Num of Sent(UL)</option>
+										<option value="rxtimeme">Rxtime(ForMe)</option>
+										<option value="rxtimes">Rxtime(SBSS)</option>
+										<option value="rxtimeo">Rxtime(OBSS)</option>
+										<option value="rxtime">Rxtime</option>
+										<option value="idle">Idletime</option>
+										<option value="busy">Busytime</option>
+										<option value="txp">TxPower</option>
+										<option value="ccat">CCAT</option>
+										<option value="notdetect">NotDetectDueToLevel</option>
+										</select>
+									</td>
+								</tr>
+								<tr>
+									<td class = "lline">Show Correlation</td>
+									<td>
+										<div id="staCorrel" class="make-switch switch-small">
+											<input type="checkbox" checked>
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<th colspan = '2'>Show AP Plot</th>
+								</tr>
+								<tr>
+									<td class = "lline">X axis</td>
+									<td>
+										<select id="APplotx" style="width:150px">>
+										<option value="node" selected>Node ID</option>
+										<option value="thr">Throughput</option>
+										<option value="mcs">MCS</option>
+										<option value="sinr">SINR</option>
+										<option value="detect">Num of Detects</option>
+										<option value="reover">Retry Overhead</option>
+										<option value="loss">Loss Ratio</option>
+										<option value="txtime">Txtime(DL)</option>
+										<option value="sent">Num of Sent(DL)</option>
+										<option value="rxtimeme">Rxtime(ForMe)</option>
+										<option value="rxtimes">Rxtime(SBSS)</option>
+										<option value="rxtimeo">Rxtime(OBSS)</option>
+										<option value="rxtime">Rxtime</option>
+										<option value="idle">Idletime</option>
+										<option value="busy">Busytime</option>
+										<option value="txp">TxPower</option>
+										<option value="ccat">CCAT</option>
+										<option value="notdetect">NotDetectDueToLevel</option>
+										</select>
+									</td>
+								</tr>
+								<tr>
+									<td class = "lline">Y axis</td>
+									<td>
+										<select id="APploty" style="width:150px">>
+										<option value="node" selected>Node ID</option>
+										<option value="thr">Throughput</option>
+										<option value="mcs">MCS</option>
+										<option value="sinr">SINR</option>
+										<option value="detect">Num of Detects</option>
+										<option value="reover">Retry Overhead</option>
+										<option value="loss">Loss Ratio</option>
+										<option value="txtime">Txtime(DL)</option>
+										<option value="sent">Num of Sent(DL)</option>
+										<option value="rxtimeme">Rxtime(ForMe)</option>
+										<option value="rxtimes">Rxtime(SBSS)</option>
+										<option value="rxtimeo">Rxtime(OBSS)</option>
+										<option value="rxtime">Rxtime</option>
+										<option value="idle">Idletime</option>
+										<option value="busy">Busytime</option>
+										<option value="txp">TxPower</option>
+										<option value="ccat">CCAT</option>
+										<option value="notdetect">NotDetectDueToLevel</option>
+										</select>
+									</td>
+								</tr>
+								<tr>
+									<td class = "lline">Color</td>
+									<td>
+										<select id="APplotc" style="width:150px">>
+										<option value="thr">Throughput</option>
+										<option value="mcs" selected>MCS</option>
+										<option value="sinr">SINR</option>
+										<option value="detect">Num of Detects</option>
+										<option value="reover">Retry Overhead</option>
+										<option value="loss">Loss Ratio</option>
+										<option value="txtime">Txtime</option>
+										<option value="sent">Num of Sent(UL)</option>
+										<option value="rxtimeme">Rxtime(ForMe)</option>
+										<option value="rxtimes">Rxtime(SBSS)</option>
+										<option value="rxtimeo">Rxtime(OBSS)</option>
+										<option value="rxtime">Rxtime</option>
+										<option value="idle">Idletime</option>
+										<option value="busy">Busytime</option>
+										<option value="txp">TxPower</option>
+										<option value="ccat">CCAT</option>
+										<option value="notdetect">NotDetectDueToLevel</option>
+										</select>
+									</td>
+								</tr>
+								<tr>
+									<td class = "lline">Show Correlation</td>
+									<td>
+										<div id='apCorrel' class="make-switch switch-small">
+											<input type="checkbox" checked>
+										</div>
+									</td>
+								</tr>
+								<tr>
+								<th colspan = '2'>Selected File List</th>
+								</tr>
+							</table>
+						</form>
+					</div>
+				</div>
+				<div class="split-pane-divider" id="my-divider"></div>
+				<div class="split-pane-component" id="right-component">
+					<div class="pretty-split-pane-component-inner" color = "red" id = "insert_svg">
+						<p id = "enter" style = "display:;"><button><span class="oi oi-expand-left"></span></button></p>
+						<p id = "exit" style = "display:none;"><button><span class="oi oi-expand-right"></span></button></p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+	
+	<script type="text/javascript" src="./js/d3.js"></script>
+	<script type="text/javascript" src="./js/d3-symbol-extra.min.js"></script>
+	<script src="./js/highlight.js"></script>
+	<script src="./js/main.js"></script>
+	<script type="text/javascript" src="./js/report.js"></script>
+	<script type="text/javascript">
+		
+		//Form要素を取得する
+		var form = document.forms.action.myfile,
+			ElementsCount = document.forms.action.role.length,
+			table = document.getElementById("settings"),
+			dataset = {},reader_list = [],results,end;
+		
+		
+		form.addEventListener('change', function(e) {
+			results = e.target.files;
+			end = results.length;
+			for (var i = 0; i < end; i++){
+				// 行を行末に追加
+				var row = table.insertRow(-1);
+				// セルの挿入
+				var cell1 = row.insertCell(-1);
+				var cell2 = row.insertCell(-1);
+				// ボタン用 HTML
+				cell1.setAttribute("class","lline");
+				cell1.innerHTML = 'Method: ' + i + '';
+				cell2.innerHTML = '<label><input type="checkbox" name = "files" value="' + i + '" onclick="ResFileNum()"> ' + results[i].name.split(/_|\./)[3] + '</input></label>';
+				
+			}
+			// スタートボタンの追加
+			var row = table.insertRow(-1);
+			// セルの挿入
+			var cell1 = row.insertCell(-1);
+			// セルの内容入力
+			cell1.setAttribute("class", "lline");
+			cell1.innerHTML = '<button  type = "button" class="btn btn-outline-secondary btn-block"   value = "Start Analysis" onclick="Analysis();" ><span class="oi oi-play-circle"></span> Start Analysis</button>';
+			cell1.setAttribute("colspan", "2");
+			
+		})
+		
+		function Analysis(){
+			dataset = {}
+			for (var l = 0; l < end; l ++){
+					//ファイルが読み込まれた時の処理
+					(function(n){
+						if (document.forms.action.files[l].checked){
+							reader_list[n] = new FileReader();		  
+							//読み込んだファイルの中身を取得する
+							reader_list[n].readAsText(results[n]);
+							reader_list[n].addEventListener('load', function(e) {
+								dataset = Object.assign(dataset,JSON.parse(e.target.result))
+							},false);
+						}
+					})(l);
+			}
+			setTimeout("Update()", 50 * end);
+		}
+		
+		function allcheck() {
+			var checked = document.forms.action.allrole.checked;
+			for( i = 0 ; i < ElementsCount ; i++ ) {
+				 document.forms.action.role[i].checked = checked; // ON・OFFを切り替え
+			}
+		}
+		
+		function uncheck() {
+			var allchecked = true
+			for( i = 0 ; i < ElementsCount ; i++ ) {
+				if (document.forms.action.role[i].checked != true){
+					allchecked = false
+				}
+			}
+			
+			document.forms.action.allrole.checked = allchecked;
+				
+		}
+		
+		function ResFileNum() {
+			var checked_length = $('input[name="files"]:checked').length;
+			
+			// 選択上限は3つまで
+			if (checked_length >= 2) {
+			  $('input[name="files"]:not(:checked)').attr('disabled', 'disabled');
+			} else {
+			  $('input[name="files"]:not(:checked)').removeAttr('disabled');
+			}
+				
+		}
+		
+		$(document).ready(function(){
+			$('#staCorrel,#apCorrel').on('switchChange.bootstrapSwitch', function(event,state){
+			console.log(state);
+			　　});
+		　});
+ 
+		
+		
+	</script>
+</html>

@@ -1,0 +1,88 @@
+{
+	"sim_time":27,
+	"train_time":7,
+	"mbps":1000000,
+	"control":["MiET","N2OB","Legacy"],
+	"scenario":"ss5",
+	"drop_num":1,
+	"usecase":
+		{
+			"HQV":{"Utraf":0,"Dtraf":100.0},
+			"RO":{"Utraf":100.0,"Dtraf":100.0},
+			"GAME":{"Utraf":1.0,"Dtraf":75.0},
+			"WEB":{"Utraf":0.0,"Dtraf":0.015},
+			"HA":{"Utraf":100.0,"Dtraf":0.0},
+			"DS":{"Utraf":0.1,"Dtraf":0.0},
+			"VI":{"Utraf":480.0,"Dtraf":0.0},
+			"MC":{"Utraf":0.0,"Dtraf":10.0}
+		},
+	"scenario_info":
+		{
+			"ss4":{"apnum":3,"stanum":15,"nodenum":18,"staperbss":5},
+			"ss5":{"apnum":90,"stanum":360,"nodenum":450,"staperbss":4},
+			"ss6":{"apnum":9,"stanum":720,"nodenum":729,"staperbss":80}
+		},
+	"mcs":
+		{
+			"BPSK_0.5":0,
+			"QPSK_0.5":1,
+			"QPSK_0.75":2,
+			"16QAM_0.5":3,
+			"16QAM_0.75":4,
+			"64QAM_0.67":5,
+			"64QAM_0.75":6,
+			"64QAM_0.83":7
+		},
+	"chartlabel":
+		{
+			"node":"Node ID",
+			"dis":"Distance",
+			"txp":"TxPower",
+			"ccat":"CCAT",
+			"notdetect":"NotDetectDueToLevel",
+			"Dthr":"DL Throughput",
+			"Uthr":"UL Throughput",
+			"reover":"Retry Overhead",
+			"loss":"Loss Ratio", 
+			"Dmcs":"DL MCS",
+			"Umcs":"UL MCS",
+			"sent":"Num of Sent",
+			"dsent":"Num of DataSent",
+			"detect":"Num of Detects",
+			"Dsinr":"DL SINR", 
+			"Usinr":"UL SINR", 
+			"txtime":"Txtime",
+			"rxtime":"Rxtime",
+			"rxtimeme":"Rxtime(ForMe)", 
+			"idle":"IdleTime",
+			"busy":"BusyTime",
+			"rxtimes":"Rxtime(FromSBSS)",
+			"rxtimeo":"Rxtime(FromOBSS)"
+		},
+	"unitlabel":
+		{
+			"node": "",
+			"dis": "m",
+			"Dthr":"Mbps",
+			"Uthr":"Mbps",
+			"Dmcs":"",
+			"Umcs":"",
+			"Dsinr":"dB",
+			"Usinr":"dB",
+			"txtime":"sec",
+			"rxtime":"sec",
+			"rxtimeme":"sec",
+			"rxtimes":"sec",
+			"rxtimeo":"sec",
+			"reover":"%",
+			"loss":"%",
+			"detect":"",
+			"sent":"",
+			"dsent":"",
+			"busy":"sec",
+			"idle":"sec",
+			"txp": "dBm",
+			"ccat": "dbm",
+			"notdetect": ""
+		}
+}
